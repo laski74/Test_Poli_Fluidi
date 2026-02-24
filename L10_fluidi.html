@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fluidi – Teoria ed Esercizi | Preparazione Test Politecnico</title>
+
+<!-- MathJax Configuration -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']]
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5;color:#1e1e1e;line-height:1.65}
+
+/* HEADER */
+.site-header{background:linear-gradient(135deg,#0d47a1,#1565c0,#1976d2);color:#fff;padding:30px 20px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.site-header h1{font-size:2rem;font-weight:700;letter-spacing:.5px}
+.site-header p{margin-top:6px;font-size:1.05rem;opacity:.9}
+
+/* TABS */
+.tab-bar{display:flex;justify-content:center;gap:0;background:#fff;border-bottom:3px solid #1565c0;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.tab-btn{flex:1;max-width:420px;padding:16px 10px;border:none;background:transparent;font-size:1.05rem;font-weight:600;color:#555;cursor:pointer;transition:all .25s;border-bottom:3px solid transparent;margin-bottom:-3px}
+.tab-btn:hover{color:#1565c0;background:#e3f2fd}
+.tab-btn.active{color:#0d47a1;border-bottom-color:#0d47a1;background:#e3f2fd}
+.tab-content{display:none;max-width:1100px;margin:0 auto;padding:25px 18px 60px}
+.tab-content.active{display:block}
+
+/* THEORY */
+.theory-section{margin-bottom:36px}
+.theory-section h2{font-size:1.5rem;color:#0d47a1;border-left:5px solid #1565c0;padding-left:14px;margin-bottom:16px}
+.theory-section h3{font-size:1.18rem;color:#1565c0;margin:18px 0 8px}
+.theory-card{background:#fff;border-radius:12px;padding:24px 28px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:4px solid #1976d2}
+.theory-card p,.theory-card li{font-size:1rem;margin-bottom:8px}
+.theory-card ul{padding-left:22px}
+.theory-card ul li{list-style:disc}
+.formula-box{background:linear-gradient(135deg,#e3f2fd,#bbdefb);border:1px solid #90caf9;border-radius:8px;padding:16px 20px;margin:14px 0;text-align:center;font-size:1.12rem}
+.formula-box-green{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:1px solid #a5d6a7;border-radius:8px;padding:16px 20px;margin:14px 0;text-align:center;font-size:1.12rem}
+.formula-box-orange{background:linear-gradient(135deg,#fff3e0,#ffe0b2);border:1px solid #ffcc80;border-radius:8px;padding:16px 20px;margin:14px 0;text-align:center;font-size:1.12rem}
+.note-box{background:#fffde7;border-left:4px solid #fbc02d;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:.95rem}
+
+/* EXERCISES */
+.exercise-card{background:#fff;border-radius:12px;margin-bottom:28px;box-shadow:0 2px 12px rgba(0,0,0,.08);overflow:hidden;border:1px solid #e0e0e0}
+.exercise-header{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:linear-gradient(135deg,#e3f2fd,#f5f5f5);border-bottom:1px solid #e0e0e0;flex-wrap:wrap;gap:10px}
+.exercise-number{font-weight:700;font-size:1.15rem;color:#0d47a1}
+.exercise-body{padding:20px 24px}
+.exercise-body p{margin-bottom:10px;font-size:1.02rem}
+.options-list{list-style:none;padding:0;margin:12px 0 16px}
+.options-list li{padding:8px 14px;margin-bottom:6px;border-radius:6px;background:#f5f5f5;border:1px solid #e0e0e0;font-size:1rem}
+
+/* Solution toggle */
+.solution-toggle{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:2px solid #1565c0;background:#fff;color:#1565c0;border-radius:8px;cursor:pointer;font-size:.98rem;font-weight:600;transition:all .25s}
+.solution-toggle:hover{background:#1565c0;color:#fff}
+.solution-content{display:none;margin-top:16px;padding:20px;background:linear-gradient(135deg,#f1f8e9,#fff9c4);border-radius:10px;border:1px solid #c5e1a5}
+.solution-content.open{display:block}
+.solution-content h4{color:#33691e;margin-bottom:10px;font-size:1.05rem}
+.solution-content p,.solution-content li{font-size:.98rem;margin-bottom:8px}
+.correct-answer{background:#e8f5e9;border:2px solid #43a047;border-radius:8px;padding:10px 16px;margin-top:12px;font-weight:700;font-size:1.05rem;color:#2e7d32}
+
+/* Timer */
+.timer-container{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.timer-display{font-family:'Courier New',Courier,monospace;font-size:1.4rem;font-weight:700;color:#d32f2f;min-width:60px;text-align:center}
+.timer-btn{padding:7px 16px;border:none;border-radius:6px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}
+.timer-btn.start{background:#43a047;color:#fff}
+.timer-btn.start:hover{background:#2e7d32}
+.timer-btn.reset{background:#757575;color:#fff}
+.timer-btn.reset:hover{background:#616161}
+.timer-btn.running{background:#e53935;color:#fff}
+.timer-btn.running:hover{background:#c62828}
+
+@media(max-width:700px){
+  .site-header h1{font-size:1.4rem}
+  .tab-btn{font-size:.92rem;padding:12px 6px}
+  .exercise-header{flex-direction:column;align-items:flex-start}
+  .theory-card{padding:16px 18px}
+  .exercise-body{padding:14px 16px}
+}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:#e0e0e0}
+::-webkit-scrollbar-thumb{background:#90a4ae;border-radius:4px}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>⚗️ Meccanica dei Fluidi</h1>
+  <p>Statica e Dinamica dei Fluidi — Preparazione Test di Ingresso al Politecnico</p>
+</header>
+
+<nav class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('theory',this)">📖 Scheda Teoria</button>
+  <button class="tab-btn" onclick="switchTab('exercises',this)">✏️ Esercizi Guidati</button>
+</nav>
+
+<!-- ================================================================ -->
+<!--                     TAB 1 – TEORIA                              -->
+<!-- ================================================================ -->
+<div id="theory" class="tab-content active">
+
+<section class="theory-section">
+<h2>1. Proprietà dei Fluidi</h2>
+<div class="theory-card">
+<h3>Fluidi, liquidi e aeriformi</h3>
+<p>I <strong>fluidi</strong> sono sistemi fisici che <em>non hanno una forma propria</em>. Si dividono in:</p>
+<ul>
+  <li><strong>Liquidi</strong>: incomprimibili (volume costante), non hanno forma propria ma hanno volume proprio. Le molecole sono debolmente legate e libere di scorrere.</li>
+  <li><strong>Aeriformi (gas)</strong>: comprimibili (volume variabile), non hanno né forma né volume propri. Le molecole interagiscono praticamente solo durante gli urti.</li>
+</ul>
+<p>Per confronto, i <strong>solidi</strong> hanno forma propria e sono praticamente incomprimibili; le molecole occupano posizioni fisse in una struttura rigida.</p>
+</div>
+
+<div class="theory-card">
+<h3>Descrizione continua e densità</h3>
+<p>Un fluido viene trattato come un sistema <strong>continuo</strong>, composto da elementi infinitesimi di volume $\Delta V$ e massa $\Delta m$.</p>
+<div class="formula-box">
+  $$\rho = \frac{\Delta m}{\Delta V} \qquad \text{[kg/m}^3\text{]}$$
+</div>
+<p>Se il fluido è <strong>omogeneo</strong> (densità costante): $\;\rho = \dfrac{m}{V}$</p>
+<div class="note-box">
+  📌 <strong>Valori utili:</strong> $\rho_{\text{acqua}} = 1000\;\text{kg/m}^3$, &ensp; $\rho_{\text{mercurio}} = 13\,600\;\text{kg/m}^3$, &ensp; $\rho_{\text{aria}} \approx 1{,}29\;\text{kg/m}^3$
+</div>
+</div>
+</section>
+
+<section class="theory-section">
+<h2>2. Pressione</h2>
+<div class="theory-card">
+<h3>Definizione di pressione</h3>
+<p>La <strong>pressione</strong> è il rapporto tra il modulo della forza perpendicolare a una superficie e l'area della superficie stessa:</p>
+<div class="formula-box">
+  $$p = \frac{F}{A} \qquad \text{[Pa] = [N/m}^2\text{]}$$
+</div>
+<p>La pressione è una grandezza <strong>scalare</strong> (non è un vettore): in un fluido all'equilibrio, il rapporto $F/A$ non dipende dall'orientamento della superficie.</p>
+<div class="note-box">
+  📌 In un fluido all'equilibrio le forze che gli elementi adiacenti esercitano l'uno sull'altro sono sempre <strong>perpendicolari</strong> alle superfici di separazione. Se esistesse una componente tangenziale, gli elementi scivolerebbero e non ci sarebbe equilibrio.
+</div>
+</div>
+
+<div class="theory-card">
+<h3>Unità di misura della pressione</h3>
+<table style="width:100%;border-collapse:collapse;margin-top:8px">
+<tr style="background:#e3f2fd"><th style="padding:8px;border:1px solid #90caf9;text-align:left">Unità</th><th style="padding:8px;border:1px solid #90caf9;text-align:left">Equivalenza</th><th style="padding:8px;border:1px solid #90caf9;text-align:left">Contesto</th></tr>
+<tr><td style="padding:8px;border:1px solid #e0e0e0"><strong>Pascal (Pa)</strong></td><td style="padding:8px;border:1px solid #e0e0e0">1 Pa = 1 N/m²</td><td style="padding:8px;border:1px solid #e0e0e0">SI</td></tr>
+<tr><td style="padding:8px;border:1px solid #e0e0e0"><strong>Atmosfera (atm)</strong></td><td style="padding:8px;border:1px solid #e0e0e0">1 atm = 1,013 × 10⁵ Pa</td><td style="padding:8px;border:1px solid #e0e0e0">Chimica</td></tr>
+<tr><td style="padding:8px;border:1px solid #e0e0e0"><strong>Bar</strong></td><td style="padding:8px;border:1px solid #e0e0e0">1 bar = 10⁵ Pa</td><td style="padding:8px;border:1px solid #e0e0e0">Meteorologia</td></tr>
+<tr><td style="padding:8px;border:1px solid #e0e0e0"><strong>mmHg (torr)</strong></td><td style="padding:8px;border:1px solid #e0e0e0">760 mmHg = 1 atm</td><td style="padding:8px;border:1px solid #e0e0e0">Medicina</td></tr>
+</table>
+</div>
+</section>
+
+<section class="theory-section">
+<h2>3. Legge di Stevino (Pressione idrostatica)</h2>
+<div class="theory-card">
+<h3>Enunciato</h3>
+<p>La pressione all'interno di un fluido incomprimibile in equilibrio aumenta linearmente con la profondità $h$:</p>
+<div class="formula-box">
+  $$p = p_0 + \rho \, g \, h$$
+</div>
+<ul>
+  <li>$p_0$ = pressione sulla superficie libera (spesso $p_{\text{atm}}$)</li>
+  <li>$\rho$ = densità del fluido [kg/m³]</li>
+  <li>$g \approx 9{,}8$ m/s² (nei test spesso $g = 10$ m/s²)</li>
+  <li>$h$ = profondità dalla superficie libera [m]</li>
+</ul>
+<div class="note-box">
+  📌 La pressione <strong>non dipende</strong> dalla forma del recipiente: dipende solo dalla profondità. Punti alla stessa quota hanno la stessa pressione.
+</div>
+</div>
+<div class="theory-card">
+<h3>Solo pressione idrostatica (senza $p_0$)</h3>
+<div class="formula-box-green">
+  $$p_{\text{idrostatica}} = \rho \, g \, h$$
+</div>
+</div>
+</section>
+
+<section class="theory-section">
+<h2>4. Principio di Pascal</h2>
+<div class="theory-card">
+<p><strong>Enunciato:</strong> una variazione di pressione applicata a un fluido confinato si trasmette <em>integralmente e con la stessa intensità</em> a ogni punto del fluido e alle pareti del contenitore.</p>
+<h3>Torchio / sollevatore idraulico</h3>
+<div class="formula-box-orange">
+  $$\frac{F_1}{A_1} = \frac{F_2}{A_2} \quad \Longrightarrow \quad F_2 = F_1\,\frac{A_2}{A_1}$$
+</div>
+<p>Agisce come <strong>moltiplicatore di forza</strong>.</p>
+</div>
+</section>
+
+<section class="theory-section">
+<h2>5. Vasi Comunicanti</h2>
+<div class="theory-card">
+<p><strong>Principio:</strong> un liquido omogeneo in recipienti comunicanti raggiunge lo <strong>stesso livello</strong>, indipendentemente dalla forma.</p>
+<h3>Liquidi diversi non miscibili</h3>
+<div class="formula-box">
+  $$\rho_a \cdot h_a = \rho_b \cdot h_b \qquad \Longleftrightarrow \qquad \frac{h_a}{h_b} = \frac{\rho_b}{\rho_a}$$
+</div>
+</div>
+</section>
+
+<section class="theory-section">
+<h2>6. Pressione Atmosferica e Barometro di Torricelli</h2>
+<div class="theory-card">
+<div class="formula-box-green">
+  $$p_{\text{atm}} = 1{,}013 \times 10^5\;\text{Pa} = 1\;\text{atm}$$
+</div>
+<h3>Barometro di Torricelli</h3>
+<p>Tubo chiuso con vuoto in cima, immerso in un fluido:</p>
+<div class="formula-box">
+  $$p_{\text{atm}} = \rho_{\text{fluido}} \cdot g \cdot \Delta h$$
+</div>
+<p>Con mercurio → $\Delta h = 760$ mm. L'altezza è inversamente proporzionale alla densità del fluido usato.</p>
+<div class="note-box">
+  📌 La pressione atmosferica <strong>diminuisce</strong> con l'altitudine.
+</div>
+</div>
+</section>
+
+<section class="theory-section">
+<h2>7. Principio di Archimede</h2>
+<div class="theory-card">
+<h3>Enunciato</h3>
+<p>Un corpo immerso in un fluido riceve una <strong>spinta verso l'alto</strong> pari al peso del fluido spostato:</p>
+<div class="formula-box">
+  $$F_A = \rho_{\text{fluido}} \cdot V_{\text{immerso}} \cdot g$$
+</div>
+<p>La spinta <strong>non dipende</strong> dalla forma, dalla massa o dalla profondità del corpo, ma solo da $V_{\text{immerso}}$ e $\rho_{\text{fluido}}$.</p>
+
+<h3>Condizioni di galleggiamento</h3>
+<table style="width:100%;border-collapse:collapse;margin-top:8px">
+<tr style="background:#e3f2fd"><th style="padding:8px;border:1px solid #90caf9">Condizione</th><th style="padding:8px;border:1px solid #90caf9">Effetto</th></tr>
+<tr><td style="padding:8px;border:1px solid #e0e0e0">$\rho_{\text{corpo}} > \rho_{\text{fluido}}$</td><td style="padding:8px;border:1px solid #e0e0e0">Il corpo <strong>affonda</strong></td></tr>
+<tr><td style="padding:8px;border:1px solid #e0e0e0">$\rho_{\text{corpo}} = \rho_{\text{fluido}}$</td><td style="padding:8px;border:1px solid #e0e0e0"><strong>Equilibrio</strong> indifferente</td></tr>
+<tr><td style="padding:8px;border:1px solid #e0e0e0">$\rho_{\text{corpo}} < \rho_{\text{fluido}}$</td><td style="padding:8px;border:1px solid #e0e0e0">Il corpo <strong>galleggia</strong></td></tr>
+</table>
+
+<h3>Corpo parzialmente immerso</h3>
+<div class="formula-box-green">
+  $$\frac{\rho_{\text{corpo}}}{\rho_{\text{fluido}}} = \frac{V_{\text{immerso}}}{V_{\text{corpo}}}$$
+</div>
+<div class="formula-box">
+  $$\frac{V_{\text{emerso}}}{V_{\text{corpo}}} = 1 - \frac{\rho_{\text{corpo}}}{\rho_{\text{fluido}}}$$
+</div>
+</div>
+</section>
+
+<section class="theory-section">
+<h2>8. Dinamica dei Fluidi Ideali</h2>
+<div class="theory-card">
+<h3>Fluido ideale</h3>
+<ul>
+  <li><strong>Incomprimibile</strong>: densità $\rho$ costante.</li>
+  <li><strong>Non viscoso</strong>: attrito interno trascurabile.</li>
+</ul>
+
+<h3>Regime stazionario</h3>
+<p>La velocità in ogni punto dello spazio <strong>non cambia nel tempo</strong>. Tutti gli elementi che passano per un dato punto hanno, <em>in quel punto</em>, la stessa velocità.</p>
+<div class="note-box">
+  📌 Non significa che il fluido sia fermo, né che la velocità sia uguale ovunque. Significa che il <strong>campo di velocità</strong> non varia nel tempo.
+</div>
+
+<h3>Linee e tubi di flusso</h3>
+<ul>
+  <li>Le traiettorie in regime stazionario = <strong>linee di flusso</strong>.</li>
+  <li>La velocità è <strong>tangente</strong> alla linea di flusso.</li>
+  <li>Due linee di flusso <strong>non si incrociano mai</strong>.</li>
+</ul>
+</div>
+
+<div class="theory-card">
+<h3>Equazione di continuità (Legge di Leonardo)</h3>
+<div class="formula-box">
+  $$S_1 \, v_1 = S_2 \, v_2$$
+</div>
+<p>Dove la sezione è minore la velocità è maggiore.</p>
+
+<h3>Portata volumica</h3>
+<div class="formula-box-orange">
+  $$Q = S \cdot v = \frac{V}{\Delta t} \qquad \text{[m}^3\text{/s]}$$
+</div>
+<p>La portata è <strong>costante</strong> lungo un tubo di flusso in regime stazionario.</p>
+</div>
+
+<div class="theory-card">
+<h3>Viscosità (cenno)</h3>
+<p>Un fluido è <strong>viscoso</strong> quando è presente un <strong>attrito interno</strong> fra strati adiacenti che scorrono a velocità diverse. In un fluido ideale la viscosità è trascurabile.</p>
+</div>
+</section>
+
+<section class="theory-section">
+<h2>9. Mappa Concettuale</h2>
+<div class="theory-card" style="text-align:center">
+<p><strong>Pressione</strong> → Legge di Stevino → Vasi comunicanti</p>
+<p><strong>Pressione</strong> → Principio di Pascal → Torchio idraulico</p>
+<p><strong>Pressione atmosferica</strong> → Barometro di Torricelli</p>
+<p><strong>Spinta di Archimede</strong> → Galleggiamento</p>
+<p><strong>Dinamica</strong> → Regime stazionario → Eq. di continuità → Portata</p>
+</div>
+</section>
+
+</div>
+<!-- FINE TAB TEORIA -->
+<!-- ================================================================ -->
+<!--                   TAB 2 – ESERCIZI                              -->
+<!-- ================================================================ -->
+<div id="exercises" class="tab-content">
+
+<p style="text-align:center;color:#555;margin-bottom:24px;font-size:1.02rem">
+  ⏱ Avvia il timer di 2 minuti, prova a rispondere, poi clicca <strong>«Mostra svolgimento»</strong> per la correzione.
+</p>
+
+<!-- ==================== ESERCIZIO 1 ==================== -->
+<div class="exercise-card" id="ex1">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 1</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer1">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(1)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(1)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>A quale profondità un sub deve immergersi in acqua affinché la pressione sul suo corpo sia il <strong>doppio</strong> di quella atmosferica?</p>
+  <p><em>Dati: $p_{\text{atm}} = 10^5$ Pa; $\rho_{\text{acqua}} = 10^3$ kg/m³; $g = 10$ m/s²</em></p>
+  <ul class="options-list">
+    <li>(a) non ci sono abbastanza dati per rispondere</li>
+    <li>(b) circa 20 m</li>
+    <li>(c) circa 1 m</li>
+    <li>(d) circa 100 m</li>
+    <li>(e) circa 10 m</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol1')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol1">
+    <h4>Strategia</h4>
+    <p>Legge di Stevino generalizzata: $p = p_{\text{atm}} + \rho g h$. Si chiede $p = 2\,p_{\text{atm}}$.</p>
+    <h4>Svolgimento</h4>
+    <p>$$2\,p_{\text{atm}} = p_{\text{atm}} + \rho g h \quad \Longrightarrow \quad \rho g h = p_{\text{atm}}$$</p>
+    <p>$$h = \frac{p_{\text{atm}}}{\rho g} = \frac{10^5}{10^3 \times 10} = 10\;\text{m}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (e) circa 10 m</div>
+    <div class="note-box">⚠️ <strong>Errore comune:</strong> porre $\rho g h = 2\,p_{\text{atm}}$ (dimenticando che la pressione totale include già $p_{\text{atm}}$), ottenendo 20 m.</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 2 ==================== -->
+<div class="exercise-card" id="ex2">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 2</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer2">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(2)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(2)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Un recipiente chiuso cubico contiene gas a $p = 2 \cdot 10^{5}$ Pa. Forza $F$ su ciascuna faccia se il lato è $20$ cm?</p>
+  <ul class="options-list">
+    <li>(a) $1 \times 10^{3}$ N</li>
+    <li>(b) $8 \times 10^{3}$ N</li>
+    <li>(c) $8 \times 10^{7}$ N</li>
+    <li>(d) Non è possibile rispondere con i soli dati forniti</li>
+    <li>(e) $8 \times 10^{5}$ N</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol2')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol2">
+    <h4>Svolgimento</h4>
+    <p>$$l = 20\;\text{cm} = 0{,}20\;\text{m} \qquad A = l^2 = 0{,}04\;\text{m}^2$$</p>
+    <p>$$F = p \cdot A = 2 \times 10^{5} \times 4 \times 10^{-2} = 8 \times 10^{3}\;\text{N}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (b) $8 \times 10^{3}$ N</div>
+    <div class="note-box">⚠️ <strong>Errore comune:</strong> non convertire i cm in m.</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 3 ==================== -->
+<div class="exercise-card" id="ex3">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 3</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer3">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(3)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(3)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Motore con $P_{\max} = 9 \times 10^{4}$ W aziona un montacarichi da vuoto pesante $1{,}5 \times 10^{4}$ N. Massimo peso del carico a $v = 3$ m/s?</p>
+  <ul class="options-list">
+    <li>(a) $1{,}5 \times 10^{4}$ N</li>
+    <li>(b) $7{,}5 \times 10^{4}$ N</li>
+    <li>(c) $45 \times 10^{4}$ N</li>
+    <li>(d) Non ci sono abbastanza dati</li>
+    <li>(e) Nessuna delle altre risposte è corretta</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol3')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol3">
+    <h4>Svolgimento</h4>
+    <p>$$F_{\text{tot}} = \frac{P_{\max}}{v} = \frac{9 \times 10^4}{3} = 3 \times 10^4\;\text{N}$$</p>
+    <p>$$F_{\text{carico}} = F_{\text{tot}} - P_{\text{montacarichi}} = 3 \times 10^4 - 1{,}5 \times 10^4 = 1{,}5 \times 10^4\;\text{N}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (a) $1{,}5 \times 10^{4}$ N</div>
+    <div class="note-box">⚠️ Ricordare di sottrarre il peso del montacarichi vuoto.</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 4 ==================== -->
+<div class="exercise-card" id="ex4">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 4</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer4">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(4)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(4)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>La spinta di Archimede su un corpo <strong>completamente immerso</strong> in un fluido dipende solo da:</p>
+  <ul class="options-list">
+    <li>(a) profondità e volume del fluido spostato</li>
+    <li>(b) peso del corpo e densità del fluido</li>
+    <li>(c) accelerazione di gravità e profondità</li>
+    <li>(d) profondità e massa del corpo</li>
+    <li>(e) volume del corpo e densità del fluido</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol4')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol4">
+    <h4>Ragionamento</h4>
+    <p>$F_A = \rho_{\text{fluido}} \cdot V_{\text{corpo}} \cdot g$. Non dipende né dalla profondità né dalla massa/densità del corpo.</p>
+    <div class="correct-answer">✔ Risposta corretta: (e) dal volume del corpo e dalla densità del fluido</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 5 ==================== -->
+<div class="exercise-card" id="ex5">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 5</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer5">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(5)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(5)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Sul fondo di una piscina la pressione è 150 000 Pa. Dati: $\rho = 10^3$ kg/m³, $p_{\text{atm}} = 10^5$ Pa, $g = 10$ m/s². Profondità $h$?</p>
+  <ul class="options-list">
+    <li>(a) circa 0,5 m</li>
+    <li>(b) circa 3 m</li>
+    <li>(c) circa 5 m</li>
+    <li>(d) non è calcolabile</li>
+    <li>(e) circa 10 m</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol5')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol5">
+    <h4>Svolgimento</h4>
+    <p>$$h = \frac{p - p_{\text{atm}}}{\rho g} = \frac{150\,000 - 100\,000}{10^3 \times 10} = \frac{50\,000}{10\,000} = 5\;\text{m}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (c) circa 5 m</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 6 ==================== -->
+<div class="exercise-card" id="ex6">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 6</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer6">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(6)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(6)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Minimo volume di un corpo di massa 1 kg per non affondare in acqua? ($\rho_{\text{acqua}} = 10^3$ kg/m³)</p>
+  <ul class="options-list">
+    <li>(a) $0{,}2 \times 10^{-3}$ m³</li>
+    <li>(b) 2 dm³</li>
+    <li>(c) 1000 cm³</li>
+    <li>(d) nessuna delle altre risposte è corretta</li>
+    <li>(e) $1 \times 10^{-3}$ m³</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol6')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol6">
+    <h4>Svolgimento</h4>
+    <p>Non affonda se $F_A \geq P$, cioè $\rho_{\text{acqua}} V g \geq mg$:</p>
+    <p>$$V_{\min} = \frac{m}{\rho_{\text{acqua}}} = \frac{1}{10^3} = 10^{-3}\;\text{m}^3$$</p>
+    <p>Nota: $10^{-3}\;\text{m}^3 = 1\;\text{dm}^3 = 1000\;\text{cm}^3$. Le opzioni (c) e (e) hanno lo stesso valore numerico.</p>
+    <div class="correct-answer">✔ Risposta corretta: (e) $1 \times 10^{-3}$ m³</div>
+    <div class="note-box">⚠️ Attenzione ai trabocchetti sulle unità: (b) = 2 dm³ è il doppio!</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 7 ==================== -->
+<div class="exercise-card" id="ex7">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 7</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer7">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(7)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(7)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Secondo la legge di Stevino, se la profondità in un liquido in equilibrio statico aumenta:</p>
+  <ul class="options-list">
+    <li>(a) la legge di Stevino non si applica a liquidi in equilibrio statico</li>
+    <li>(b) la pressione idrostatica aumenta</li>
+    <li>(c) la pressione idrostatica diminuisce</li>
+    <li>(d) la pressione idrostatica rimane inalterata</li>
+    <li>(e) l'accelerazione di gravità aumenta</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol7')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol7">
+    <h4>Ragionamento</h4>
+    <p>$p = \rho g h$: relazione lineare diretta → se $h$ aumenta, $p$ aumenta.</p>
+    <div class="correct-answer">✔ Risposta corretta: (b) la pressione idrostatica aumenta</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 8 ==================== -->
+<div class="exercise-card" id="ex8">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 8</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer8">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(8)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(8)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>A quale profondità un sub deve immergersi affinché la pressione sia il doppio di quella atmosferica? (Stessa domanda dell'Es. 1, opzioni in ordine diverso)</p>
+  <p><em>$p_{\text{atm}} = 10^5$ Pa; $\rho = 10^3$ kg/m³; $g = 10$ m/s²</em></p>
+  <ul class="options-list">
+    <li>(a) circa 10 m</li>
+    <li>(b) circa 1 m</li>
+    <li>(c) circa 20 m</li>
+    <li>(d) circa 100 m</li>
+    <li>(e) non ci sono abbastanza dati</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol8')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol8">
+    <h4>Svolgimento</h4>
+    <p>Identico all'Esercizio 1: $h = \dfrac{p_{\text{atm}}}{\rho g} = 10$ m.</p>
+    <div class="correct-answer">✔ Risposta corretta: (a) circa 10 m</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 9 ==================== -->
+<div class="exercise-card" id="ex9">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 9</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer9">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(9)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(9)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Pallone da calcio (pieno d'aria) e sfera di polistirolo delle <strong>stesse dimensioni</strong> (raggio 19 cm), entrambi completamente immersi in acqua. Quale affermazione è vera?</p>
+  <ul class="options-list">
+    <li>(a) La spinta sul pallone è maggiore</li>
+    <li>(b) La spinta sul pallone è minore</li>
+    <li>(c) Non ci sono elementi sufficienti per paragonarle</li>
+    <li>(d) La spinta agisce solo sul pallone (pieno d'aria)</li>
+    <li>(e) Le spinte sono uguali</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol9')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol9">
+    <h4>Ragionamento</h4>
+    <p>$F_A = \rho_{\text{acqua}} \cdot V_{\text{immerso}} \cdot g$. Le dimensioni sono identiche, entrambi completamente immersi → stesso $V_{\text{immerso}}$ → stessa spinta.</p>
+    <p>La spinta non dipende dal materiale o dal contenuto del corpo.</p>
+    <div class="correct-answer">✔ Risposta corretta: (e) Le spinte sono uguali</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 10 ==================== -->
+<div class="exercise-card" id="ex10">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 10</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer10">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(10)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(10)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Giocattolo ($V_g$, $\rho_g$) galleggia in un fluido ($\rho_f$), immerso per <strong>1/3</strong> del volume. Quale relazione?</p>
+  <ul class="options-list">
+    <li>(a) $\rho_g = \frac{3\rho_f}{2}$</li>
+    <li>(b) $\rho_g = \frac{\rho_f}{3}$</li>
+    <li>(c) $\rho_g = \frac{2\rho_f}{3}$</li>
+    <li>(d) $\rho_g = 3\rho_f$</li>
+    <li>(e) $\rho_g = \frac{4\rho_f}{3}$</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol10')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol10">
+    <h4>Svolgimento</h4>
+    <p>Equilibrio: $\rho_g V_g g = \rho_f \cdot \frac{V_g}{3} \cdot g \;\Longrightarrow\; \rho_g = \frac{\rho_f}{3}$</p>
+    <div class="correct-answer">✔ Risposta corretta: (b) $\rho_g = \dfrac{\rho_f}{3}$</div>
+    <div class="note-box">📌 Regola: $\dfrac{\rho_{\text{corpo}}}{\rho_{\text{fluido}}} = \dfrac{V_{\text{immerso}}}{V_{\text{corpo}}}$</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 11 ==================== -->
+<div class="exercise-card" id="ex11">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 11</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer11">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(11)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(11)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Barometro di Torricelli con colla vinilica ($\rho = 1100$ kg/m³). Altezza della colonna al livello del mare ($p_{\text{atm}} = 101\,325$ Pa)?</p>
+  <ul class="options-list">
+    <li>(a) 940 mm</li>
+    <li>(b) 0,760 mm</li>
+    <li>(c) 9,40 mm</li>
+    <li>(d) 9,40 m</li>
+    <li>(e) 760 mm</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol11')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol11">
+    <h4>Svolgimento</h4>
+    <p>$$\Delta h = \frac{p_{\text{atm}}}{\rho g} = \frac{101\,325}{1100 \times 9{,}8} = \frac{101\,325}{10\,780} \approx 9{,}40\;\text{m}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (d) 9,40 m</div>
+    <div class="note-box">📌 Fluidi meno densi del mercurio richiedono colonne molto più alte.</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 12 ==================== -->
+<div class="exercise-card" id="ex12">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 12</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer12">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(12)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(12)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Sub a 25 m di profondità. Pressione in superficie: 101 325 Pa. Pressione totale?</p>
+  <ul class="options-list">
+    <li>(a) 346 000 Pa</li>
+    <li>(b) 204 000 Pa</li>
+    <li>(c) 303 000 Pa</li>
+    <li>(d) 245 000 Pa</li>
+    <li>(e) 436 000 Pa</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol12')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol12">
+    <h4>Svolgimento</h4>
+    <p>$$p = 101\,325 + 1000 \times 9{,}8 \times 25 = 101\,325 + 245\,000 = 346\,325 \approx 346\,000\;\text{Pa}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (a) 346 000 Pa</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 13 ==================== -->
+<div class="exercise-card" id="ex13">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 13</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer13">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(13)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(13)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Cubetto: spigolo 10 cm, massa 1,2 kg. Completamente immerso in acqua: spinta di Archimede?</p>
+  <ul class="options-list">
+    <li>(a) 10 N</li>
+    <li>(b) 120 N</li>
+    <li>(c) 0,12 N</li>
+    <li>(d) 1200 N</li>
+    <li>(e) 1 N</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol13')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol13">
+    <h4>Svolgimento</h4>
+    <p>$$V = (0{,}10)^3 = 10^{-3}\;\text{m}^3$$</p>
+    <p>$$F_A = 1000 \times 10^{-3} \times 9{,}8 = 9{,}8 \approx 10\;\text{N}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (a) 10 N</div>
+    <div class="note-box">⚠️ La massa del cubetto NON influenza la spinta di Archimede.</div>
+  </div>
+</div>
+</div>
+<!-- ==================== ESERCIZIO 14 ==================== -->
+<div class="exercise-card" id="ex14">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 14</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer14">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(14)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(14)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Se un fluido in moto è in "regime stazionario" vuol dire che:</p>
+  <ul class="options-list">
+    <li>(a) Gli elementi di fluido sono in quiete</li>
+    <li>(b) Tutti gli elementi si muovono lungo le stesse linee di flusso</li>
+    <li>(c) Tutti gli elementi che passano per un punto si muovono con velocità costante lungo la stessa linea di flusso</li>
+    <li>(d) Tutti gli elementi hanno, in ogni punto, sempre la stessa velocità</li>
+    <li>(e) Tutti gli elementi che passano per un dato punto hanno, in quel punto, la stessa velocità</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol14')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol14">
+    <h4>Ragionamento</h4>
+    <p>Regime stazionario = il campo di velocità non varia nel tempo. In un dato punto la velocità è sempre la stessa, ma può variare da punto a punto.</p>
+    <ul>
+      <li>(a) sbagliata: il fluido si muove</li>
+      <li>(c) subdola: la velocità di un elemento può cambiare lungo la traiettoria</li>
+      <li>(d) sbagliata: la velocità può essere diversa in punti diversi</li>
+    </ul>
+    <div class="correct-answer">✔ Risposta corretta: (e)</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 15 ==================== -->
+<div class="exercise-card" id="ex15">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 15</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer15">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(15)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(15)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Quale affermazione è vera?</p>
+  <ul class="options-list">
+    <li>(a) Un aeriforme ha forma propria ma non volume proprio</li>
+    <li>(b) Nessuna delle altre risposte è corretta</li>
+    <li>(c) Un liquido (ideale) non ha forma propria, ma ha volume proprio</li>
+    <li>(d) Un aeriforme ha volume proprio ma non forma propria</li>
+    <li>(e) Un liquido (ideale) ha forma propria, ma non volume proprio</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol15')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol15">
+    <h4>Ragionamento</h4>
+    <p>Liquidi: incomprimibili → <strong>volume proprio</strong>; prendono la forma del recipiente → <strong>no forma propria</strong>.</p>
+    <p>Aeriformi: comprimibili → né forma né volume propri.</p>
+    <div class="correct-answer">✔ Risposta corretta: (c)</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 16 ==================== -->
+<div class="exercise-card" id="ex16">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 16</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer16">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(16)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(16)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Densità: O₂ = 1,43; N₂ = 1,25; He = 0,18; CO₂ = 1,98 (kg/m³). Cubo di lato 20 cm, massa 11,44 g. Che gas contiene?</p>
+  <ul class="options-list">
+    <li>(a) nessuno degli altri gas</li>
+    <li>(b) anidride carbonica</li>
+    <li>(c) ossigeno</li>
+    <li>(d) azoto</li>
+    <li>(e) elio</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol16')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol16">
+    <h4>Svolgimento</h4>
+    <p>$$V = (0{,}20)^3 = 8 \times 10^{-3}\;\text{m}^3$$</p>
+    <p>$$\rho = \frac{m}{V} = \frac{11{,}44 \times 10^{-3}}{8 \times 10^{-3}} = 1{,}43\;\text{kg/m}^3 \quad \to \text{ossigeno}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (c) ossigeno</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 17 ==================== -->
+<div class="exercise-card" id="ex17">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 17</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer17">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(17)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(17)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Forza $\vec{F}$ perpendicolare a una superficie piana $S$. Definizione <strong>formalmente corretta</strong> di pressione?</p>
+  <ul class="options-list">
+    <li>(a) $p = \frac{\vec{F}}{S}$</li>
+    <li>(b) $\vec{p} = \vec{F}\,S$</li>
+    <li>(c) $p = F\,S$</li>
+    <li>(d) $p = \frac{F}{S}$</li>
+    <li>(e) $\vec{p} = \frac{\vec{F}}{S}$</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol17')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol17">
+    <h4>Ragionamento</h4>
+    <p>La pressione è <strong>scalare</strong> → escluse (b) e (e) che hanno $\vec{p}$. Non è $F \cdot S$ → esclusa (c). Non si divide un vettore per uno scalare ottenendo uno scalare → esclusa (a). Si usa il <strong>modulo</strong> $F = |\vec{F}|$.</p>
+    <div class="correct-answer">✔ Risposta corretta: (d) $p = F/S$</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 18 ==================== -->
+<div class="exercise-card" id="ex18">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 18</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer18">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(18)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(18)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Elemento di volume infinitesimo in un fluido all'equilibrio. Le forze degli elementi adiacenti sono:</p>
+  <ul class="options-list">
+    <li>(a) perpendicolari alle superfici di separazione</li>
+    <li>(b) tangenti alle superfici di separazione</li>
+    <li>(c) parallele alle superfici di separazione</li>
+    <li>(d) sia perpendicolari che tangenti</li>
+    <li>(e) necessariamente nulle</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol18')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol18">
+    <h4>Ragionamento</h4>
+    <p>Se ci fosse una componente tangenziale, gli elementi di fluido scorrerebbero → niente equilibrio. Devono essere <strong>perpendicolari</strong>.</p>
+    <div class="correct-answer">✔ Risposta corretta: (a)</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 19 ==================== -->
+<div class="exercise-card" id="ex19">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 19</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer19">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(19)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(19)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Tubo di sezione $600\;\text{cm}^2$, velocità dell'acqua $20\;\text{m/s}$. Portata?</p>
+  <ul class="options-list">
+    <li>(a) $100\;\text{m}^3\text{/s}$</li>
+    <li>(b) $25\;\text{m}^3\text{/s}$</li>
+    <li>(c) $10\;\text{m}^3\text{/s}$</li>
+    <li>(d) $1\;\text{m}^3\text{/s}$</li>
+    <li>(e) $2{,}5\;\text{m}^3\text{/s}$</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol19')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol19">
+    <h4>Svolgimento</h4>
+    <p>$$S = 600\;\text{cm}^2 = 600 \times 10^{-4}\;\text{m}^2 = 0{,}06\;\text{m}^2$$</p>
+    <p>$$Q = S \cdot v = 0{,}06 \times 20 = 1{,}2\;\text{m}^3\text{/s} \approx 1\;\text{m}^3\text{/s}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (d) $1\;\text{m}^3\text{/s}$</div>
+    <div class="note-box">⚠️ Conversione fondamentale: $1\;\text{cm}^2 = 10^{-4}\;\text{m}^2$</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 20 ==================== -->
+<div class="exercise-card" id="ex20">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 20</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer20">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(20)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(20)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Pallina di $V = 2\;\text{cm}^3$ in equilibrio in un liquido con $\rho = 1{,}2 \times 10^3\;\text{kg/m}^3$. Massa della pallina?</p>
+  <ul class="options-list">
+    <li>(a) 0,6 g</li>
+    <li>(b) 0,252 g</li>
+    <li>(c) 1,2 g</li>
+    <li>(d) 12 g</li>
+    <li>(e) 2,4 g</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol20')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol20">
+    <h4>Svolgimento</h4>
+    <p>Equilibrio → $\rho_{\text{pallina}} = \rho_{\text{liquido}}$</p>
+    <p>$$m = \rho \cdot V = 1{,}2 \times 10^3 \times 2 \times 10^{-6} = 2{,}4 \times 10^{-3}\;\text{kg} = 2{,}4\;\text{g}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (e) 2,4 g</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 21 ==================== -->
+<div class="exercise-card" id="ex21">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 21</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer21">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(21)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(21)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Olio in tubo a sezione quadrata (lato 10 cm), velocità 20 m/s. Portata volumica?</p>
+  <ul class="options-list">
+    <li>(a) circa 4 m³/s</li>
+    <li>(b) circa 0,02 m³/s</li>
+    <li>(c) circa 1,5 m³/s</li>
+    <li>(d) circa 0,2 m³/s</li>
+    <li>(e) Serve la densità dell'olio</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol21')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol21">
+    <h4>Svolgimento</h4>
+    <p>$$S = (0{,}10)^2 = 0{,}01\;\text{m}^2 \qquad Q = 0{,}01 \times 20 = 0{,}2\;\text{m}^3\text{/s}$$</p>
+    <p>La portata volumica NON dipende dalla densità.</p>
+    <div class="correct-answer">✔ Risposta corretta: (d) circa 0,2 m³/s</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 22 ==================== -->
+<div class="exercise-card" id="ex22">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 22</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer22">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(22)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(22)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Il ghiaccio galleggia nell'acqua perché:</p>
+  <ul class="options-list">
+    <li>(A) il peso specifico del ghiaccio è uguale a quello dell'acqua</li>
+    <li>(B) la densità del ghiaccio è minore di quella dell'acqua</li>
+    <li>(C) l'acqua, passando da 0 °C a 4 °C, diminuisce di volume</li>
+    <li>(D) l'unità di massa del ghiaccio pesa meno dell'unità di massa dell'acqua</li>
+    <li>(E) nessuna delle precedenti</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol22')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol22">
+    <h4>Ragionamento</h4>
+    <p>Un corpo galleggia se $\rho_{\text{corpo}} < \rho_{\text{fluido}}$. Il ghiaccio ha $\rho \approx 917$ kg/m³ &lt; 1000 kg/m³.</p>
+    <p>(D) è un trabocchetto: 1 kg pesa sempre 9,8 N, indipendentemente dal materiale!</p>
+    <div class="correct-answer">✔ Risposta corretta: (B)</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 23 ==================== -->
+<div class="exercise-card" id="ex23">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 23</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer23">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(23)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(23)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Un fluido si dice viscoso se in esso:</p>
+  <ul class="options-list">
+    <li>(A) la velocità di scorrimento tra gli strati è minima</li>
+    <li>(B) è presente il solo attrito con le pareti</li>
+    <li>(C) è presente un attrito interno</li>
+    <li>(D) non esiste accelerazione di gravità</li>
+    <li>(E) nessuna delle precedenti</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol23')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol23">
+    <h4>Ragionamento</h4>
+    <p>La viscosità è l'<strong>attrito interno</strong> fra strati adiacenti che scorrono a velocità diverse.</p>
+    <div class="correct-answer">✔ Risposta corretta: (C)</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 24 ==================== -->
+<div class="exercise-card" id="ex24">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 24</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer24">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(24)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(24)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Cilindro omogeneo (altezza $h$, densità $\rho_c$) galleggia verticalmente in un liquido ($\rho_l$). Parte emersa = $\frac{1}{10}h$. Rapporto $\rho_c / \rho_l$?</p>
+  <ul class="options-list">
+    <li>(A) 11/10</li>
+    <li>(B) 1/2</li>
+    <li>(C) 1/10</li>
+    <li>(D) 9/10</li>
+    <li>(E) 1</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol24')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol24">
+    <h4>Svolgimento</h4>
+    <p>Emersa $= \frac{h}{10}$ → immersa $= \frac{9h}{10}$</p>
+    <p>$$\frac{\rho_c}{\rho_l} = \frac{V_{\text{imm}}}{V_{\text{tot}}} = \frac{A \cdot \frac{9h}{10}}{A \cdot h} = \frac{9}{10}$$</p>
+    <div class="correct-answer">✔ Risposta corretta: (D) 9/10</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 25 ==================== -->
+<div class="exercise-card" id="ex25">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 25</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer25">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(25)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(25)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Parallelepipedo omogeneo ($a, b, c$) galleggia con $a$ verticale, metà di $a$ emersa, in liquido con $\rho_l = 1{,}2\;\text{g/cm}^3$. Densità del materiale?</p>
+  <ul class="options-list">
+    <li>(A) 0,2 g/cm³</li>
+    <li>(B) 0,4 g/cm³</li>
+    <li>(C) 0,6 g/cm³</li>
+    <li>(D) 2,4 g/cm³</li>
+    <li>(E) Non si può rispondere senza i valori</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol25')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol25">
+    <h4>Svolgimento</h4>
+    <p>Metà immersa → $\dfrac{\rho_{\text{corpo}}}{\rho_l} = \dfrac{1}{2}$ → $\rho_{\text{corpo}} = \dfrac{1{,}2}{2} = 0{,}6\;\text{g/cm}^3$</p>
+    <div class="correct-answer">✔ Risposta corretta: (C) 0,6 g/cm³</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== ESERCIZIO 26 ==================== -->
+<div class="exercise-card" id="ex26">
+<div class="exercise-header">
+  <span class="exercise-number">Esercizio 26</span>
+  <div class="timer-container">
+    <span class="timer-display" id="timer26">2:00</span>
+    <button class="timer-btn start" onclick="toggleTimer(26)">▶ Avvia</button>
+    <button class="timer-btn reset" onclick="resetTimer(26)">↺ Reset</button>
+  </div>
+</div>
+<div class="exercise-body">
+  <p>Pressione idrostatica alla profondità $h$ in un liquido di densità $d$, con $g$ = accelerazione di gravità:</p>
+  <ul class="options-list">
+    <li>(A) $h\,d\,g$</li>
+    <li>(B) $hg/d$</li>
+    <li>(C) $h\,d\,g/g$</li>
+    <li>(D) $h/(dg)$</li>
+    <li>(E) $gd/h$</li>
+  </ul>
+  <button class="solution-toggle" onclick="toggleSolution('sol26')">📘 Mostra svolgimento</button>
+  <div class="solution-content" id="sol26">
+    <h4>Ragionamento</h4>
+    <p>Legge di Stevino (solo idrostatica): $p = \rho \cdot g \cdot h = d \cdot g \cdot h$</p>
+    <div class="correct-answer">✔ Risposta corretta: (A) $h\,d\,g$</div>
+  </div>
+</div>
+</div>
+
+</div>
+<!-- FINE TAB ESERCIZI -->
+
+<!-- ================================================================ -->
+<!--                        JAVASCRIPT                               -->
+<!-- ================================================================ -->
+<script>
+// TAB SWITCHING
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+// SOLUTION TOGGLE
+function toggleSolution(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// TIMER SYSTEM
+const timers = {};
+
+function getTimerElements(n) {
+  return {
+    display: document.getElementById('timer' + n),
+    btn: document.querySelector('#ex' + n + ' .timer-btn.start')
+  };
+}
+
+function toggleTimer(n) {
+  if (!timers[n]) timers[n] = { seconds: 120, interval: null, running: false };
+  const t = timers[n];
+  const els = getTimerElements(n);
+  if (!t.running) {
+    t.running = true;
+    els.btn.textContent = '⏸ Pausa';
+    els.btn.classList.remove('start');
+    els.btn.classList.add('running');
+    t.interval = setInterval(() => {
+      t.seconds--;
+      updateDisplay(n);
+      if (t.seconds <= 0) {
+        clearInterval(t.interval);
+        t.running = false;
+        els.btn.textContent = '▶ Avvia';
+        els.btn.classList.remove('running');
+        els.btn.classList.add('start');
+        playAlarm();
+      }
+    }, 1000);
+  } else {
+    clearInterval(t.interval);
+    t.running = false;
+    els.btn.textContent = '▶ Riprendi';
+    els.btn.classList.remove('running');
+    els.btn.classList.add('start');
+  }
+}
+
+function resetTimer(n) {
+  if (timers[n]) {
+    clearInterval(timers[n].interval);
+    timers[n] = { seconds: 120, interval: null, running: false };
+  }
+  const els = getTimerElements(n);
+  els.display.textContent = '2:00';
+  els.display.style.color = '#d32f2f';
+  els.display.style.fontWeight = '700';
+  els.btn.textContent = '▶ Avvia';
+  els.btn.classList.remove('running');
+  els.btn.classList.add('start');
+}
+
+function updateDisplay(n) {
+  const t = timers[n];
+  const els = getTimerElements(n);
+  const min = Math.floor(t.seconds / 60);
+  const sec = t.seconds % 60;
+  els.display.textContent = min + ':' + (sec < 10 ? '0' : '') + sec;
+  if (t.seconds <= 30) {
+    els.display.style.color = '#b71c1c';
+    els.display.style.fontWeight = '900';
+  } else if (t.seconds <= 60) {
+    els.display.style.color = '#e65100';
+  } else {
+    els.display.style.color = '#d32f2f';
+    els.display.style.fontWeight = '700';
+  }
+}
+
+function playAlarm() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioCtx();
+    const freqs = [880, 0, 880, 0, 880, 0, 1174.66];
+    const durs = [0.15, 0.08, 0.15, 0.08, 0.15, 0.08, 0.4];
+    let time = ctx.currentTime;
+    freqs.forEach((freq, i) => {
+      if (freq > 0) {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.value = freq;
+        osc.type = 'square';
+        gain.gain.setValueAtTime(0.18, time);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + durs[i]);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(time);
+        osc.stop(time + durs[i]);
+      }
+      time += durs[i];
+    });
+  } catch(e) {
+    alert('⏰ Tempo scaduto!');
+  }
+}
+</script>
+
+</body>
+</html>
