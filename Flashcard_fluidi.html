@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards Fisica: Equilibrio dei Fluidi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 { color: #2c3e50; }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        .card {
+            background-color: transparent;
+            width: 300px;
+            height: 200px;
+            perspective: 1000px;
+            cursor: pointer;
+            margin: auto;
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .card-front {
+            background-color: #3498db;
+            color: white;
+        }
+        .card-back {
+            background-color: #2ecc71;
+            color: white;
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Flashcards: L'equilibrio dei fluidi</h1>
+    <p>Clicca sulle carte per scoprire la risposta corretta.</p>
+
+    <div class="container" id="flashcards">
+        </div>
+
+    <script>
+        const quizData = [
+            { q: "Qual è l'unità di misura della pressione nel Sistema Internazionale?", a: "Il pascal (Pa), che equivale a 1 N/m²." },
+            { q: "Se raddoppi la forza esercitata su una superficie costante, cosa succede alla pressione?", a: "La pressione raddoppia (sono direttamente proporzionali)." },
+            { q: "Cosa afferma la legge di Stevino?", a: "La pressione esercitata da un liquido è direttamente proporzionale alla sua densità e alla profondità." },
+            { q: "Qual è il valore della pressione atmosferica standard al livello del mare?", a: "Circa 1,013 x 10⁵ Pa (o 1 atm)." },
+            { q: "In cosa consiste il principio di Pascal?", a: "La pressione esercitata in un punto di un fluido si trasmette invariata a ogni altro punto e alle pareti del contenitore." },
+            { q: "Due vasi comunicanti contengono lo stesso liquido. Cosa succede ai livelli?", a: "Il liquido raggiunge la stessa altezza in entrambi i contenitori, indipendentemente dalla forma." },
+            { q: "Qual è la formula della spinta di Archimede?", a: "S = d_fluido * V_immerso * g" },
+            { q: "Quando un corpo affonda in un liquido?", a: "Quando la sua densità è maggiore di quella del liquido (o il peso è maggiore della spinta)." },
+            { q: "Cos'è la spinta aerostatica?", a: "È la spinta di Archimede esercitata dai gas (come l'aria) sui corpi in essi immersi." },
+            { q: "Se un corpo galleggia, com'è la spinta di Archimede rispetto al peso?", a: "La spinta di Archimede è uguale al peso del corpo." }
+        ];
+
+        const container = document.getElementById('flashcards');
+
+        quizData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => card.classList.toggle('flipped');
+
+            card.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-front">${item.q}</div>
+                    <div class="card-back">${item.a}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>
